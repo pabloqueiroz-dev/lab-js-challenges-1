@@ -23,6 +23,11 @@ function howManyTimes(arrOfWords, searchedWord) {
 }
 return count
 }
+// array.forEach((currentWord)=> {
+//   if (currentWord === word){
+//     cout++
+//   }
+// })
 
 
 // Iteration 2 | Number Sequence
@@ -38,17 +43,13 @@ function createSequence(n) {
 }
 
 
-
 // Iteration 3 | Multiply for Each
 const numbers = [1, 2, 5, 10, 13, 50];
 
 function multiplyBy(numbers,n) {
   let arr = []
-  if (numbers.length === 0){
-    return arr
-  }
-    numbers.forEach(element => {
-      arr.push(element * n)
+    numbers.forEach(oneNumber => {
+      arr.push(oneNumber * n)
     });
     return arr
 }
@@ -60,17 +61,18 @@ const original = ["cat", "dog", "fish", "bird", "cat", "fish"];
 const toRemove = ["cat", "dog"];
 
 function filterOut(original,toRemove) {
-  const arr = []
+  const filterArr = []
 
   if (original.length === 0){return null;}
-  if (toRemove.length === 0){return original;}
    
   for (let i = 0; i < original.length; i++) {
+    //let currentAnimal = origina[i];
     if (toRemove.indexOf(original[i]) === -1){
-      arr.push(original[i]);
+      // if (!toRemove.includes(original[i]) === -1){
+      filterArr.push(original[i]);
     }
   }
-  return arr
+  return filterArr
 }
  //console.log(filterOut(original,toRemove))
 
@@ -119,7 +121,9 @@ function uniquifyArray(duplicateWords) {
      if (duplicateWords.length === 0){return null;}
 
        for (let i = 0; i < duplicateWords.length; i++) {
+        //const currentWord = duplicateWords[i]
     if (wordsArr.indexOf(duplicateWords[i]) === -1){
+      // if (!wordsArr.includes(duplicateWords[i])){
       wordsArr.push(duplicateWords[i]);
     }
   }
@@ -153,20 +157,35 @@ const matrix = [
 ];
 
 function greatestProduct(matrix) {
-  // let newMatrix1 = true;
-  // let newMatrix2 = true;
+ let product = 0;
 
-  // for (let i = 0; i < matrix.length; i++){
-  //   for (let j = 0; j< matrix[i].length; j++){
-  //     if ((matrix[i][j] === 1)){
-  //     newMatrix1 = true
-  //     }
-  //     if (matrix[i][j] === 2){
-  //       newMatrix2 = true
-  //     }
-  //   }
-  // }
-  // if (newMatrix1) return 1
-  // if (newMatrix2) return 16
-}
-// console.log(greatestProduct(matrix))
+  const numberOfRows = matrix.length;
+  const numberOfColumns = matrix[0].length;
+
+  // console.log(numberOfRows);
+  // console.log(numberOfColumns)
+
+  for (let i = 0; i < numberOfRows; i++) {
+    let row = matrix[i];
+    for (let j = 0; j < numberOfColumns - 3; j++) {
+      // 0 - 1 - 2 - 3
+      // 1 - 2 - 3 - 4
+      let rowProduct = row[j] * row[j + 1] * row[j + 2] * row[j + 3];
+      if (rowProduct > product) {
+        product = rowProduct;
+      }
+    }
+  }
+
+  for (let i = 0; i < numberOfColumns; i++) {
+    for (let j = 0; j < numberOfRows - 3; j++) {
+      let columnProduct =
+        matrix[j][i] * matrix[j + 1][i] * matrix[j + 2][i] * matrix[j + 3][i];
+      if (columnProduct > product) {
+        product = columnProduct;
+      }
+    }
+  }
+
+  return product;
+};
